@@ -54,14 +54,41 @@ def bubblesort(arr):
                 arr[j] = aux
     return arr
 
-def heap(arr):
-    pass
+def heap(arr, arr_len, maior):
+    raiz = maior #raiz começa como maior
+    l = 2*maior+1 #esquerda
+    r = 2*maior+2 #direita
+
+    #se esquerda for maior que o maior
+    if l<arr_len and arr[l]>arr[raiz]: 
+        raiz = l
+
+    #se direita for maior que o maior
+    if r<arr_len and arr[r]>arr[raiz]:
+        raiz = r
+
+    #se raiz nao for o maior
+    if raiz != maior:
+        arr[maior], arr[raiz] = arr[raiz], arr[maior] #swap
+        heap(arr, arr_len, raiz) #faz heap com as sub-árvores
     
 def heapsort(arr):
-    pass
+    n = len(arr)
+
+    #reorganiza vetor(faz heap)
+    for i in range(n//2-1, -1, -1):
+        heap(arr, n, i)
+    
+    #troca elementos de posição, levando o maior para o final
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heap(arr, i, 0) #refaz heap
+
+    return arr
 
 teste = [2, 5, 8, 9, 3, 4, 1]
 #print(selection_sort(teste))
 #print(insertion_sort(teste))
 #print(quicksort(teste, 0, 6))
-print(bubblesort(teste))
+#print(bubblesort(teste))
+print(heapsort(teste))
