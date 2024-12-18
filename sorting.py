@@ -54,6 +54,12 @@ def bubblesort(arr):
                 arr[j] = aux
     return arr
 
+def heap(arr):
+    pass
+    
+def heapsort(arr):
+    pass
+
 teste = [2, 5, 8, 9, 3, 4, 1]
 #print(selection_sort(teste))
 #print(insertion_sort(teste))
