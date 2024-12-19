@@ -1,6 +1,5 @@
 import math
 
-#falta: shellsort, mergesort
 def selection_sort(arr):
     for i in range(len(arr)-1):
         min = i
