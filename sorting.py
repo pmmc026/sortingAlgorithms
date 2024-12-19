@@ -1,5 +1,6 @@
 import math
 
+#falta: shellsort, mergesort
 def selection_sort(arr):
     for i in range(len(arr)-1):
         min = i
@@ -19,6 +20,23 @@ def insertion_sort(arr):
             arr[j+1] = arr[j]
             j -= 1
         arr[j+1] = aux
+    return arr
+
+def shellsort(arr):
+    n = len(arr)
+    gap = n//2 #inicia gap como metade do tamanho do vetor
+    while gap>0: #enquanto gap for maior que 0
+        i=gap;
+        while i<n: #enquanto i menor que o tamanho do vetor
+            j=i-gap 
+            while j>=0:
+                if(arr[j+gap]>arr[j]):
+                    break
+                else:
+                    arr[j+gap], arr[j] = arr[j], arr[j+gap]
+                j=j-gap
+            i+=1
+        gap=gap//2
     return arr
 
 def quicksort(arr, left, right):
@@ -86,9 +104,39 @@ def heapsort(arr):
 
     return arr
 
+def mergesort(arr):
+    n = len(arr)
+    if n>1:
+        i = n//2
+        left = arr[:i]
+        right = arr[i:]
+        mergesort(left)
+        mergesort(right)
+
+        a = b = c = 0
+        while a<len(left) and b < len(right):
+            if(left[a]<right[b]):
+                arr[c] = left[a]
+                a+=1
+            else:
+                arr[c] = right[b]
+                b+=1
+            c+=1
+        while a < len(left):
+            arr[c] = left[a]
+            a+=1
+            c+=1
+        while b < len(right):
+            arr[c] = right[b]
+            b+=1
+            c+=1
+    return arr
+
 teste = [2, 5, 8, 9, 3, 4, 1]
 #print(selection_sort(teste))
 #print(insertion_sort(teste))
+#print(shellsort(teste))
 #print(quicksort(teste, 0, 6))
 #print(bubblesort(teste))
-print(heapsort(teste))
+#print(heapsort(teste))
+#print(mergesort(teste))
