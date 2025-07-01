@@ -1,4 +1,5 @@
 import math
+import time
 
 def selection_sort(arr):
     for i in range(len(arr)-1):
@@ -62,14 +63,21 @@ def quicksort(arr, left, right):
     return arr
 
 def bubblesort(arr):
+    comparisons = 0
+    movements = 0
     n = len(arr)
     for i in range(n):
         for j in range(1, (n-i)):
+            comparisons += 1
             if(arr[j-1]>arr[j]):
+                movements += 1
                 aux = arr[j-1]
                 arr[j-1] = arr[j]
+                movements += 1
                 arr[j] = aux
-    return arr
+                movements += 1
+    #return arr, comparisons, movements
+    return comparisons, movements
 
 def heap(arr, arr_len, maior):
     raiz = maior #raiz começa como maior
@@ -131,11 +139,19 @@ def mergesort(arr):
             c+=1
     return arr
 
-teste = [2, 5, 8, 9, 3, 4, 1]
+teste = []
+for i in range(100):
+    teste.append(i+1)
+teste.reverse()
+print(teste)
+#teste = [2, 5, 8, 9, 3, 4, 1]
+start_time = time.time()
 #print(selection_sort(teste))
 #print(insertion_sort(teste))
 #print(shellsort(teste))
 #print(quicksort(teste, 0, 6))
-#print(bubblesort(teste))
+print(bubblesort(teste))
+end_time = time.time()
+print(f"--- {(end_time - start_time)*1e3} segundos ---")
 #print(heapsort(teste))
 #print(mergesort(teste))
