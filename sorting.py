@@ -1,5 +1,7 @@
 import math
 import time
+import matplotlib.pyplot as plt
+import numpy
 
 def selection_sort(arr):
     for i in range(len(arr)-1):
@@ -13,14 +15,20 @@ def selection_sort(arr):
     return arr
 
 def insertion_sort(arr):
+    comparisons = 0
+    movements = 0
     for i in range(1, len(arr)):
         aux = arr[i]
+        movements += 1
         j = i-1
-        while j >=0 and arr[j] > aux:
+        while j >= 0 and arr[j] > aux:
+            comparisons += 1
             arr[j+1] = arr[j]
+            movements += 1
             j -= 1
         arr[j+1] = aux
-    return arr
+        movements += 1
+    return comparisons, movements
 
 def shellsort(arr):
     n = len(arr)
@@ -139,18 +147,44 @@ def mergesort(arr):
             c+=1
     return arr
 
-teste = []
-for i in range(100):
-    teste.append(i+1)
-teste.reverse()
-print(teste)
+
+comp = []
+move = []
+n = []
+clock = []
+for j in range(1, 11):
+    teste = []
+    n.append(j)
+    for i in range(10*j):
+        teste.append(i+1)
+    teste.reverse()
+    #print(teste)
+    start_time = time.time()
+    tuple = insertion_sort(teste)
+    end_time = time.time()
+    clock.append((end_time - start_time)*1e3)
+    move.append(tuple[1])
+    comp.append(tuple[0])
+
+x_axis = numpy.array(n)
+y_clock = numpy.array(clock)
+y_movement = numpy.array(move)
+y_comp = numpy.array(comp)
+
+fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
+ax1.plot(x_axis, y_comp)
+ax2.plot(x_axis, y_movement)
+ax3.plot(x_axis, y_clock)
+
+plt.show()
 #teste = [2, 5, 8, 9, 3, 4, 1]
+
 start_time = time.time()
 #print(selection_sort(teste))
-#print(insertion_sort(teste))
+print(insertion_sort(teste))
 #print(shellsort(teste))
 #print(quicksort(teste, 0, 6))
-print(bubblesort(teste))
+#print(bubblesort(teste))
 end_time = time.time()
 print(f"--- {(end_time - start_time)*1e3} segundos ---")
 #print(heapsort(teste))
