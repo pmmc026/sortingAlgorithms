@@ -147,7 +147,7 @@ def mergesort(arr):
             c+=1
     return arr
 
-
+testeBuffer = []
 comp = []
 move = []
 n = []
@@ -158,7 +158,7 @@ for j in range(1, 11):
     for i in range(10*j):
         teste.append(i+1)
     teste.reverse()
-    #print(teste)
+    testeBuffer = teste.copy()
     start_time = time.time()
     tuple = insertion_sort(teste)
     end_time = time.time()
@@ -172,6 +172,9 @@ y_movement = numpy.array(move)
 y_comp = numpy.array(comp)
 
 fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
+fig.axes[0].set_title('comparações x tamanho')
+fig.axes[1].set_title('movimentações x tamanho')
+fig.axes[2].set_title('tempo (seg) x tamanho')
 ax1.plot(x_axis, y_comp)
 ax2.plot(x_axis, y_movement)
 ax3.plot(x_axis, y_clock)
@@ -181,7 +184,7 @@ plt.show()
 
 start_time = time.time()
 #print(selection_sort(teste))
-print(insertion_sort(teste))
+print(insertion_sort(testeBuffer))
 #print(shellsort(teste))
 #print(quicksort(teste, 0, 6))
 #print(bubblesort(teste))
