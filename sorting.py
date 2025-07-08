@@ -4,15 +4,21 @@ import matplotlib.pyplot as plt
 import numpy
 
 def selection_sort(arr):
+    comparisons = 0
+    movements = 0
     for i in range(len(arr)-1):
         min = i
         for j in range(i+1, len(arr)):
+            comparisons +=1
             if(arr[j]<arr[min]):
                 min = j
+        movements += 1
         temp = arr[min]
+        movements += 1
         arr[min] = arr[i]
+        movements += 1
         arr[i] = temp
-    return arr
+    return comparisons, movements
 
 def insertion_sort(arr):
     comparisons = 0
@@ -154,13 +160,13 @@ n = []
 clock = []
 for j in range(1, 11):
     teste = []
-    n.append(j)
+    n.append(j*10)
     for i in range(10*j):
         teste.append(i+1)
     teste.reverse()
     testeBuffer = teste.copy()
     start_time = time.time()
-    tuple = insertion_sort(teste)
+    tuple = selection_sort(teste)
     end_time = time.time()
     clock.append((end_time - start_time)*1e3)
     move.append(tuple[1])
@@ -180,11 +186,12 @@ ax2.plot(x_axis, y_movement)
 ax3.plot(x_axis, y_clock)
 
 plt.show()
+
 #teste = [2, 5, 8, 9, 3, 4, 1]
 
 start_time = time.time()
 #print(selection_sort(teste))
-print(insertion_sort(testeBuffer))
+print(selection_sort(testeBuffer))
 #print(shellsort(teste))
 #print(quicksort(teste, 0, 6))
 #print(bubblesort(teste))
