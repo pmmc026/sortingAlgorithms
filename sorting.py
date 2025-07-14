@@ -37,21 +37,29 @@ def insertion_sort(arr):
     return comparisons, movements
 
 def shellsort(arr):
+    comparisons = 0;
+    movements = 0;
     n = len(arr)
-    gap = n//2 #inicia gap como metade do tamanho do vetor
+    gap = 1
+    while gap < n:
+        gap = gap * 3 + 1
     while gap>0: #enquanto gap for maior que 0
         i=gap;
         while i<n: #enquanto i menor que o tamanho do vetor
-            j=i-gap 
+            j=i-gap
+            comparisons += 1
             while j>=0:
+                comparisons += 1
                 if(arr[j+gap]>arr[j]):
                     break
                 else:
                     arr[j+gap], arr[j] = arr[j], arr[j+gap]
+                    movements += 4
                 j=j-gap
             i+=1
-        gap=gap//2
-    return arr
+        gap=gap//3
+    return comparisons, movements
+
 
 def quicksort(arr, left, right):
     l = left #index mais a esquerda
@@ -158,7 +166,7 @@ comp = []
 move = []
 n = []
 clock = []
-for j in range(1, 11):
+for j in range(1, 101):
     teste = []
     n.append(j*10)
     for i in range(10*j):
@@ -166,7 +174,7 @@ for j in range(1, 11):
     teste.reverse()
     testeBuffer = teste.copy()
     start_time = time.time()
-    tuple = selection_sort(teste)
+    tuple = shellsort(teste)
     end_time = time.time()
     clock.append((end_time - start_time)*1e3)
     move.append(tuple[1])
@@ -177,21 +185,36 @@ y_clock = numpy.array(clock)
 y_movement = numpy.array(move)
 y_comp = numpy.array(comp)
 
+deg = 1.25
+
+m, b = numpy.polyfit(x_axis, y_comp, deg)
+y_comp_pred = m * x_axis + b
+
+m, b = numpy.polyfit(x_axis, y_movement, deg)
+y_move_pred = m * x_axis + b
+
+m, b = numpy.polyfit(x_axis, y_clock, deg)
+y_clock_pred = m * x_axis + b
+
+
 fig, (ax1, ax2, ax3) = plt.subplots(1, 3)
 fig.axes[0].set_title('comparações x tamanho')
 fig.axes[1].set_title('movimentações x tamanho')
 fig.axes[2].set_title('tempo (seg) x tamanho')
-ax1.plot(x_axis, y_comp)
-ax2.plot(x_axis, y_movement)
-ax3.plot(x_axis, y_clock)
+ax1.scatter(x_axis, y_comp)
+ax1.plot(x_axis, y_comp_pred, color='red')
+ax2.scatter(x_axis, y_movement)
+ax2.plot(x_axis, y_move_pred, color='red')
+ax3.scatter(x_axis, y_clock)
+ax3.plot(x_axis, y_clock_pred, color='red')
 
 plt.show()
 
-#teste = [2, 5, 8, 9, 3, 4, 1]
+teste = [2, 5, 8, 9, 3, 4, 1]
 
 start_time = time.time()
 #print(selection_sort(teste))
-print(selection_sort(testeBuffer))
+print(shellsort(teste))
 #print(shellsort(teste))
 #print(quicksort(teste, 0, 6))
 #print(bubblesort(teste))
